@@ -13,7 +13,7 @@ order is not changed, and no spatial binning is performed.
 ## Parameters
 
 - `axis`: Coordinate axis used to order the particles (`X`, `Y`, or `Z`).
-- `input_property`: Name of the scalar particle property to accumulate.
+- `input_property`: Dropdown of available scalar numeric particle properties.
 
 ## Example
 
@@ -67,7 +67,7 @@ tree live for development.
 
 ## Technical information
 
-- Requires OVITO 3.9.1 or newer.
+- Requires OVITO 3.11.0 or newer.
 - Requires NumPy, supplied by OVITO's Python environment.
 
 ## Limitations

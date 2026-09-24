@@ -1,8 +1,18 @@
 import numpy as np
 import pytest
 from ovito.data import DataCollection, Particles
+from ovito.traits import PropertyReference
 
 from cumulative_property_profile import CumulativePropertyProfileModifier
+
+
+def test_property_parameter_uses_a_property_reference():
+    trait = CumulativePropertyProfileModifier.class_traits()[
+        "input_property"
+    ].trait_type
+
+    assert isinstance(trait, PropertyReference)
+    assert CumulativePropertyProfileModifier().input_property == "Entropy averaged"
 
 
 def make_data(positions, property_name="Mass", values=None):
@@ -59,7 +69,7 @@ def test_property_is_required():
     data = make_data([[0, 0, 0]])
 
     with pytest.raises(ValueError, match="must be specified"):
-        data.apply(CumulativePropertyProfileModifier())
+        data.apply(CumulativePropertyProfileModifier(input_property=""))
 
 
 def test_property_must_be_scalar():

@@ -5,13 +5,22 @@ from __future__ import annotations
 import numpy as np
 from ovito.data import DataCollection, DataTable
 from ovito.pipeline import ModifierInterface
-from traits.api import Enum, String
+from ovito.traits import PropertyReference
+from traits.api import Enum
 
 __all__ = ["CumulativePropertyProfileModifier"]
 
 
 _AXES = ["X", "Y", "Z"]
 _AXIS_INDICES = {axis: index for index, axis in enumerate(_AXES)}
+
+
+def _is_scalar_numeric_property(container, property_):
+    """Return whether a particle property can be cumulatively summed."""
+
+    return property_.component_count == 1 and np.issubdtype(
+        np.dtype(property_.dtype), np.number
+    )
 
 
 class CumulativePropertyProfileModifier(ModifierInterface):
@@ -24,7 +33,12 @@ class CumulativePropertyProfileModifier(ModifierInterface):
     """
 
     axis = Enum("Z", _AXES, label="Axis")
-    input_property = String("", label="Particle property")
+    input_property = PropertyReference(
+        default_value="Entropy averaged",
+        mode=PropertyReference.Mode.Properties,
+        filter=_is_scalar_numeric_property,
+        label="Particle property",
+    )
 
     def modify(self, data: DataCollection, frame: int, **kwargs):
         """Create the cumulative profile data table for the current frame."""
