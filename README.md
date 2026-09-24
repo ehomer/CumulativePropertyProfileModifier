@@ -59,15 +59,11 @@ ovitos -m pip install --user --editable /path/to/CumulativePropertyProfileModifi
 For another Python interpreter or Conda environment, use:
 
 ```text
-pip install --editable /path/to/CumulativePropertyProfileModifier
+python -m pip install --editable /path/to/CumulativePropertyProfileModifier
 ```
 
 The `--editable` option makes the package importable while keeping the source
 tree live for development.
-
-```text
-ovitos -m pip install --user --editable .
-```
 
 ## Technical information
 
