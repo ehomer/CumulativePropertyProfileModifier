@@ -272,6 +272,16 @@ class CumulativePropertyProfileModifier(ModifierInterface):
             data.attributes[f"{prefix}.fit_rmse"] = fit_result["rmse"]
             data.attributes[f"{prefix}.fit_r2"] = fit_result["r2"]
             data.attributes[f"{prefix}.fit_message"] = fit_result["message"]
+            print(f"CumulativePropertyProfile fit for {property_name}:")
+            print(f"  Width (w95): {fit_result['width']:.6g}")
+            print(
+                f"  R^2: {fit_result['r2']:.6g} "
+                f"(RMSE: {fit_result['rmse']:.6g})"
+            )
+            print(f"  Beta: {fit_result['beta']:.6g}")
+            print(f"  Alpha: {fit_result['alpha']:.6g}")
+            if fit_result["message"] != "OK":
+                print(f"  {fit_result['message']}")
 
         table = data.tables.create(
             identifier="cumulative-property-profile",

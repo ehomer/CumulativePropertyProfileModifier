@@ -186,7 +186,7 @@ def test_normalization_rejects_zero_final_value():
         )
 
 
-def test_generalized_normal_fit_adds_curve_and_attributes():
+def test_generalized_normal_fit_adds_curve_and_attributes(capsys):
     positions = np.linspace(-20.0, 20.0, 101)
     center = 0.7
     alpha = 2.0
@@ -244,6 +244,13 @@ def test_generalized_normal_fit_adds_curve_and_attributes():
     )
     assert data.attributes[f"{prefix}.fit_r2"] > 0.99
     assert data.attributes[f"{prefix}.fit_message"] == "OK"
+
+    output = capsys.readouterr().out
+    assert "CumulativePropertyProfile fit for Mass:" in output
+    assert "Width (w95):" in output
+    assert "R^2:" in output and "(RMSE:" in output
+    assert "Beta:" in output
+    assert "Alpha:" in output
 
 
 def test_profile_supports_other_axes():
