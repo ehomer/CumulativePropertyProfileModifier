@@ -70,6 +70,11 @@ tree live for development.
 - Requires OVITO 3.9.1 or newer.
 - Requires NumPy, supplied by OVITO's Python environment.
 
+## Limitations
+
+- The input property must be a numeric scalar particle property.
+- The output contains one data point per particle; no spatial binning is performed.
+
 ## License
 
 MIT License.
