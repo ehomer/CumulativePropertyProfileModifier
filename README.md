@@ -14,6 +14,15 @@ order is not changed, and no spatial binning is performed.
 
 - `axis`: Coordinate axis used to order the particles (`X`, `Y`, or `Z`).
 - `input_property`: Dropdown of available scalar numeric particle properties.
+- `subtract_reference`: Subtract a reference from every particle value before accumulation; enabled by default.
+- `reference_mode`: Use a numeric value or a global attribute from an upstream modifier.
+- `reference_value`: Numeric reference value.
+- `reference_attribute`: Exact name of the global attribute to use as the reference.
+- `absolute_value`: Replace each reference-corrected particle value with its absolute value before accumulation.
+- `normalize`: Divide every cumulative value by the final cumulative value; enabled by default.
+- `fit_generalized_normal`: Fit the normalized profile with the generalized-normal CDF; enabled by default and automatically enables normalization.
+- `fix_beta`: Keep β fixed instead of fitting it; enabled by default.
+- `beta`: Fixed β value, or initial β guess when `fix_beta` is disabled; defaults to `2.2`.
 
 ## Example
 
@@ -68,12 +77,18 @@ tree live for development.
 ## Technical information
 
 - Requires OVITO 3.11.0 or newer.
-- Requires NumPy, supplied by OVITO's Python environment.
+- Requires NumPy, supplied by OVITO's Python environment, and SciPy for the
+  generalized-normal fit.
 
 ## Limitations
 
 - The input property must be a numeric scalar particle property.
 - The output contains one data point per particle; no spatial binning is performed.
+- A global-attribute reference must be produced by an upstream modifier and must be numeric.
+- If particle identifiers are unavailable, the table includes zero-based particle indices instead.
+- Normalization requires a finite, nonzero final cumulative value.
+- Fitting requires SciPy and reports fit parameters and diagnostics as global attributes.
+- Fit attributes are named `CumulativePropertyProfile.<property>.fit_*`; the axis is not included in their names.
 
 ## License
 
