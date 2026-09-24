@@ -3,24 +3,20 @@ requires = ["setuptools", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "[[PackageName]]"
-version = "[[Version number]]"
-description = "[[Short description]]"
+name = "ovito-cumulative-property-profile"
+version = "0.1.0"
+description = "OVITO modifier for atom-resolved cumulative particle-property profiles"
 keywords = ["ovito", "ovito-extension"]
-authors = [{name = "[[Author 1 name]]", email = "[[Author 1 email]]"}, {name = "[[Author 2 name]]", email = "[[Author 2 email]]"}]
-maintainers = [{name = "[[Maintainer 1 name]]", email = "[[Maintainer 1 email]]"}]
-license = {text = "[[License]]"}
+authors = [{name = "Cumulative Property Profile contributors"}]
+license = {text = "MIT"}
 readme = "README.md"
 requires-python = ">=3.7"
 dependencies = [
     "ovito >= 3.9.1",
 ]
 
-[project.urls]
-repository = "[[Repository Link]]"
-
 [project.entry-points.'OVITO.Modifier']
-"[[Human readable modifier name]]" = "[[PackageName]]:[[ModifierName]]"
+"Cumulative Property Profile" = "cumulative_property_profile:CumulativePropertyProfileModifier"
 
 [tool.setuptools.packages.find]
 where = ["src"]
