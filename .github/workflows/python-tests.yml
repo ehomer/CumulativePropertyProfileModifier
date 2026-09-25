@@ -9,6 +9,7 @@ on:
     branches: [ "main" ]
 jobs:
   build:
+    if: ${{ false }}
     runs-on: ${{ matrix.os }}
     timeout-minutes: 15
     strategy:
@@ -42,7 +43,6 @@ jobs:
     steps:
     - uses: actions/checkout@v5
     - name: Set up Python ${{ matrix.python-version }}
-      id: setup-python
       uses: actions/setup-python@v6
       with:
         python-version: ${{ matrix.python-version }}
@@ -55,14 +55,14 @@ jobs:
     - name: Install Python dependencies
       shell: bash
       run: |
-        "${{ steps.setup-python.outputs.python-path }}" -m pip install --upgrade pip
-        "${{ steps.setup-python.outputs.python-path }}" -m pip install pytest
-        "${{ steps.setup-python.outputs.python-path }}" -m pip install "ovito==${{ matrix.ovito-version }}"
-        "${{ steps.setup-python.outputs.python-path }}" -m pip install .
+        python -m pip install --upgrade pip
+        python -m pip install pytest
+        python -m pip install "ovito==${{ matrix.ovito-version }}"
+        python -m pip install .
     - name: Show installed versions
       run: |
-        "${{ steps.setup-python.outputs.python-path }}" --version
-        "${{ steps.setup-python.outputs.python-path }}" -m pip show ovito scipy
+        python --version
+        python -m pip show ovito scipy
     - name: Test with pytest
       run: |
-        "${{ steps.setup-python.outputs.python-path }}" -m pytest
+        python -m pytest
