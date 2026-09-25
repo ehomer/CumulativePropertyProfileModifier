@@ -18,16 +18,16 @@ jobs:
           # Oldest supported OVITO release on each supported architecture.
           - os: ubuntu-22.04
             python-version: "3.11"
-            ovito-version: "3.11.0"
+            ovito-version: "3.11.3"
           - os: windows-2022
             python-version: "3.11"
-            ovito-version: "3.11.0"
+            ovito-version: "3.11.3"
           - os: macos-26
             python-version: "3.11"
-            ovito-version: "3.11.0"
+            ovito-version: "3.11.3"
           - os: macos-15-intel
             python-version: "3.11"
-            ovito-version: "3.11.0"
+            ovito-version: "3.11.3"
 
           # Current release on current representative platforms.
           - os: ubuntu-24.04
@@ -40,9 +40,9 @@ jobs:
             python-version: "3.13"
             ovito-version: "3.16.1"
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v5
     - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v5
+      uses: actions/setup-python@v6
       with:
         python-version: ${{ matrix.python-version }}
         cache: 'pip'
