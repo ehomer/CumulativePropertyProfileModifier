@@ -80,6 +80,9 @@ tree live for development.
 - Requires OVITO 3.11.0 or newer.
 - Requires NumPy, supplied by OVITO's Python environment, and SciPy for the
   generalized-normal fit.
+- Continuous integration tests selected current environments and the oldest
+  supported OVITO release; older installations are allowed on a best-effort
+  basis but are not actively tested.
 
 ## Limitations
 
