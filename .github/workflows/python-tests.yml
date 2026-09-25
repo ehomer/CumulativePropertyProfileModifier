@@ -1,5 +1,4 @@
-# This workflow will install Python dependencies, run tests and lint with a variety of Python versions
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-python
+# Run the test suite against supported OVITO releases and Python versions.
 
 name: Python Tests
 
@@ -10,37 +9,80 @@ on:
     branches: [ "main" ]
 jobs:
   build:
-    if: ${{ false }}
     runs-on: ${{ matrix.os }}
     timeout-minutes: 15
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest]
-        python-version: ["3.7", "3.8", "3.9", "3.10", "3.11"]
-        exclude:
-          - os: macos-latest
-            python-version: "3.7"
-          - os: macos-latest
+        include:
+          # Oldest supported OVITO release.
+          - os: ubuntu-22.04
             python-version: "3.8"
+            ovito-version: "3.11.0"
+          - os: windows-2022
+            python-version: "3.8"
+            ovito-version: "3.11.0"
+          - os: macos-13
+            python-version: "3.8"
+            ovito-version: "3.11.0"
+          - os: ubuntu-22.04
+            python-version: "3.9"
+            ovito-version: "3.11.0"
+          - os: ubuntu-22.04
+            python-version: "3.10"
+            ovito-version: "3.11.0"
+
+          # Representative intermediate release.
+          - os: ubuntu-22.04
+            python-version: "3.11"
+            ovito-version: "3.12.4"
+          - os: windows-2022
+            python-version: "3.10"
+            ovito-version: "3.12.4"
+          - os: macos-13
+            python-version: "3.10"
+            ovito-version: "3.12.4"
+          - os: ubuntu-22.04
+            python-version: "3.12"
+            ovito-version: "3.12.4"
+          - os: ubuntu-22.04
+            python-version: "3.13"
+            ovito-version: "3.12.4"
+
+          # Current release and current runner images.
+          - os: ubuntu-24.04
+            python-version: "3.11"
+            ovito-version: "3.16.1"
+          - os: windows-2022
+            python-version: "3.12"
+            ovito-version: "3.16.1"
+          - os: windows-2022
+            python-version: "3.13"
+            ovito-version: "3.16.1"
+          - os: macos-14
+            python-version: "3.11"
+            ovito-version: "3.16.1"
+          - os: macos-14
+            python-version: "3.13"
+            ovito-version: "3.16.1"
     steps:
-    - uses: actions/checkout@v3
-    - name: Install apt dependencies
-      if:  matrix.os == 'ubuntu-latest'
-      run: |
-        sudo apt install -y libegl1 libegl1-mesa libegl-mesa0 libgl1-mesa-glx libopengl0
+    - uses: actions/checkout@v4
     - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v4
+      uses: actions/setup-python@v5
       with:
         python-version: ${{ matrix.python-version }}
         cache: 'pip'
-        check-latest: true
-    - name: Install python dependencies
+    - name: Install Python dependencies
+      shell: bash
       run: |
         python -m pip install --upgrade pip
         python -m pip install pytest
-        python -m pip install ovito
+        python -m pip install "ovito==${{ matrix.ovito-version }}"
         python -m pip install .
+    - name: Show installed versions
+      run: |
+        python --version
+        python -m pip show ovito scipy
     - name: Test with pytest
       run: |
         pytest

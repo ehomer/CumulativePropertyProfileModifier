@@ -76,6 +76,7 @@ tree live for development.
 
 ## Technical information
 
+- Requires Python 3.8 or newer, subject to the OVITO wheel available for the platform.
 - Requires OVITO 3.11.0 or newer.
 - Requires NumPy, supplied by OVITO's Python environment, and SciPy for the
   generalized-normal fit.
