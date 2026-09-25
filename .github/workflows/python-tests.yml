@@ -46,6 +46,11 @@ jobs:
       with:
         python-version: ${{ matrix.python-version }}
         cache: 'pip'
+    - name: Install Linux graphics libraries
+      if: startsWith(matrix.os, 'ubuntu-')
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y libegl1 libopengl0 libgl1
     - name: Install Python dependencies
       shell: bash
       run: |
@@ -59,4 +64,4 @@ jobs:
         python -m pip show ovito scipy
     - name: Test with pytest
       run: |
-        pytest
+        python -m pytest
